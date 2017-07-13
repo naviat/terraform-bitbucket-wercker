@@ -24,7 +24,6 @@ build:
         code: |
           terraform init -force-copy -backend=true -backend-config="bucket=haidv.terraform.state" -backend-config="key=terraform.tfstate" -backend-config="encrypt=true"
           terraform plan
-          terraform show
     - script:
         name: create pull request
         code: |
@@ -58,4 +57,5 @@ deploy:
     - script:
         name: terraform apply
         code: |
+          terraform state rm aws_instance.sample
           terraform apply
