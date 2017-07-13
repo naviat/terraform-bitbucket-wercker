@@ -22,7 +22,7 @@ build:
     - script:
         name: terraform remote S3
         code: |
-          terraform init -force-copy -backend=true -backend-config="bucket=haidv.terraform.state" -backend-config="key=terraform.tfstate" -backend-config="encrypt=true" -backend-config="region=ap-southeast-1"
+          terraform init -force-copy -backend-config="bucket=haidv.terraform.state" -backend-config="key=terraform.tfstate" -backend-config="encrypt=true" -backend-config="region=ap-southeast-1"
           terraform plan -out=terraform.plan
     - script:
         name: create pull request
@@ -51,7 +51,7 @@ deploy:
     - script:
         name: terraform remote S3
         code: |
-          terraform init -force-copy -backend=true -backend-config="bucket=haidv.terraform.state" -backend-config="key=terraform.tfstate" -backend-config="encrypt=true" -backend-config="region=ap-southeast-1"
+          terraform init -force-copy -backend-config="bucket=haidv.terraform.state" -backend-config="key=terraform.tfstate" -backend-config="encrypt=true" -backend-config="region=ap-southeast-1"
           terraform plan -out=terraform.plan
           terraform show
     - script:
