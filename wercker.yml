@@ -51,7 +51,6 @@ deploy:
     - script:
         name: terraform remote S3
         code: |
-          cd terraform
           terraform init -force-copy -backend=true -backend-config="bucket=your-terraform-state-bucket" -backend-config="key=terraform.tfstate" -backend-config="encrypt=true"
           terraform plan
     - script:
