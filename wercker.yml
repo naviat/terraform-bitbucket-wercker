@@ -22,7 +22,6 @@ build:
     - script:
         name: terraform remote S3
         code: |
-          cd terraform
           terraform init -force-copy -backend=true -backend-config="bucket=haidv.terraform.state" -backend-config="key=terraform.tfstate" -backend-config="encrypt=true"
           terraform plan
     - script:
