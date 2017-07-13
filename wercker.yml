@@ -1,0 +1,61 @@
+box: debian
+build:
+  steps:
+    - script:
+        name: install some tools
+        code: |
+          sudo apt-get update
+          sudo apt-get -f install
+          sudo apt-get install -y wget unzip curl
+    - script:
+        name: setup terraform
+        code: |
+          # create terraform directory and export PATH
+          mkdir -p $HOME/terraform
+          export PATH=$PATH:$HOME/terraform
+          # download terraform
+          VERSION=0.9.11
+          cd $HOME/terraform
+          wget https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_linux_amd64.zip
+          unzip terraform_${VERSION}_linux_amd64.zip
+          rm terraform_${VERSION}_linux_amd64.zip
+    - script:
+        name: terraform remote S3
+        code: |
+          cd terraform
+          terraform init -force-copy -backend=true -backend-config="bucket=haidv.terraform.state" -backend-config="key=terraform.tfstate" -backend-config="encrypt=true"
+          terraform plan
+    - script:
+        name: create pull request
+        code: |
+          curl -u "[username]:${GITHUB_TOKEN}" -d '{"title": "Terraform plan Success","body": "You can merge this pull request","head": "[username]:[fromBranch]","base": "[toBranch]"}'  https://api.bitbucket.com/repos/[username]/[yourBranch]/pulls
+deploy:
+  steps:
+    - script:
+        name: install some tools
+        code: |
+          sudo apt-get update
+          sudo apt-get -f install
+          sudo apt-get install -y wget unzip curl
+    - script:
+        name: setup terraform
+        code: |
+          # create terraform directory and export PATH
+          mkdir -p $HOME/terraform
+          export PATH=$PATH:$HOME/terraform
+          # download terraform
+          VERSION=0.9.11
+          cd $HOME/terraform
+          wget https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_linux_amd64.zip
+          unzip terraform_${VERSION}_linux_amd64.zip
+          rm terraform_${VERSION}_linux_amd64.zip
+    - script:
+        name: terraform remote S3
+        code: |
+          cd terraform
+          terraform init -force-copy -backend=true -backend-config="bucket=your-terraform-state-bucket" -backend-config="key=terraform.tfstate" -backend-config="encrypt=true"
+          terraform plan
+    - script:
+        name: terraform apply
+        code: |
+          terraform apply
