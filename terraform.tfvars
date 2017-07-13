@@ -1,2 +1,2 @@
- Region = "ap-southeast-1"
- Default_security_group = "sg-47b85122"
+ region = "ap-southeast-1"
+ default_security_group = "sg-47b85122"
