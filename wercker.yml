@@ -27,7 +27,7 @@ build:
     - script:
         name: create pull request
         code: |
-          curl -u "[username]:${GITHUB_TOKEN}" -d '{"title": "Terraform plan Success","body": "You can merge this pull request","head": "[username]:[fromBranch]","base": "[toBranch]"}'  https://api.bitbucket.com/repos/[username]/[yourBranch]/pulls
+          curl -u "[username]:${GITHUB_TOKEN}" -d '{"title": "Terraform plan Success","body": "You can merge this pull request","head": "[username]:[fromBranch]","base": "[toBranch]"}'  https://api.github.com/repos/[username]/[yourBranch]/pulls
 deploy:
   steps:
     - script:
